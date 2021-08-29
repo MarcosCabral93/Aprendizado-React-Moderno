@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo,useCallback} from 'react';
 import './App.css';
 
 function App() {
@@ -20,13 +20,14 @@ useEffect(()=>{
   },[nome])
 
 
+//atualiza sem renderizar a cada alteração no e.target.value
+const contaItens=useMemo(()=>nome.length,[nome])
 
 
-
-function handleAddNome(){
+const handleAddNome=useCallback(()=>{
   usenome([...nome,input])
   useinput("")
-}
+},[input,nome])
 
 
 
@@ -39,6 +40,9 @@ function handleAddNome(){
          
             <li key={item}> {item}</li>
         )}
+        <h3>
+          {contaItens} nomes cadastrados
+        </h3>
 
       </ul>
       
